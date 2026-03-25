@@ -1,0 +1,23 @@
+--cpu Cortex-M3
+"chr-2340\startup_stm32f103xb.o"
+"chr-2340\main.o"
+"chr-2340\stm32f1xx_it.o"
+"chr-2340\stm32f1xx_hal_msp.o"
+"chr-2340\stm32f1xx_hal_gpio_ex.o"
+"chr-2340\stm32f1xx_hal_tim.o"
+"chr-2340\stm32f1xx_hal_tim_ex.o"
+"chr-2340\stm32f1xx_hal.o"
+"chr-2340\stm32f1xx_hal_rcc.o"
+"chr-2340\stm32f1xx_hal_rcc_ex.o"
+"chr-2340\stm32f1xx_hal_gpio.o"
+"chr-2340\stm32f1xx_hal_dma.o"
+"chr-2340\stm32f1xx_hal_cortex.o"
+"chr-2340\stm32f1xx_hal_pwr.o"
+"chr-2340\stm32f1xx_hal_flash.o"
+"chr-2340\stm32f1xx_hal_flash_ex.o"
+"chr-2340\stm32f1xx_hal_exti.o"
+"chr-2340\system_stm32f1xx.o"
+--strict --scatter "CHR-2340\CHR-2340.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list "CHR-2340.map" -o CHR-2340\CHR-2340.axf
