@@ -780,6 +780,37 @@ I (.\Library\stm32f10x_usart.h)(0x4D783BB4)
 I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
 F (.\System\Delay.h)(0x69C79C62)()
+F (.\System\Tick.c)(0x69C92823)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\tick.o --omf_browse .\objects\tick.crf --depend .\objects\tick.d)
+I (System\Tick.h)(0x69C928A5)
+I (.\Start\stm32f10x.h)(0x4D783CB4)
+I (.\Start\core_cm3.h)(0x4D523B58)
+I (D:\Keil\Core\ARM\ARMcompiler_506\include\stdint.h)(0x5E8F1DC2)
+I (.\Start\system_stm32f10x.h)(0x4D783CAA)
+I (.\User\stm32f10x_conf.h)(0x4D99A59E)
+I (.\Library\stm32f10x_adc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_bkp.h)(0x4D783BB4)
+I (.\Library\stm32f10x_can.h)(0x4D783BB4)
+I (.\Library\stm32f10x_cec.h)(0x4D783BB4)
+I (.\Library\stm32f10x_crc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_dac.h)(0x4D783BB4)
+I (.\Library\stm32f10x_dbgmcu.h)(0x4D783BB4)
+I (.\Library\stm32f10x_dma.h)(0x4D783BB4)
+I (.\Library\stm32f10x_exti.h)(0x4D783BB4)
+I (.\Library\stm32f10x_flash.h)(0x4D783BB4)
+I (.\Library\stm32f10x_fsmc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_gpio.h)(0x4D783BB4)
+I (.\Library\stm32f10x_i2c.h)(0x4D783BB4)
+I (.\Library\stm32f10x_iwdg.h)(0x4D783BB4)
+I (.\Library\stm32f10x_pwr.h)(0x4D783BB4)
+I (.\Library\stm32f10x_rcc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_rtc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_sdio.h)(0x4D783BB4)
+I (.\Library\stm32f10x_spi.h)(0x4D783BB4)
+I (.\Library\stm32f10x_tim.h)(0x4D783BB4)
+I (.\Library\stm32f10x_usart.h)(0x4D783BB4)
+I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
+I (.\Library\misc.h)(0x4D783BB4)
+F (.\System\tick.h)(0x69C928A5)()
 F (.\Hardware\Key.c)(0x69C79C2B)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\key.o --omf_browse .\objects\key.crf --depend .\objects\key.d)
 I (Hardware\Key.h)(0x69C79C2B)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
@@ -812,7 +843,7 @@ I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
 I (.\System\Delay.h)(0x69C79C62)
 F (.\Hardware\Key.h)(0x69C79C2B)()
-F (.\Hardware\question1.c)(0x69C7C15A)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\question1.o --omf_browse .\objects\question1.crf --depend .\objects\question1.d)
+F (.\Hardware\question1.c)(0x69C8CF4F)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\question1.o --omf_browse .\objects\question1.crf --depend .\objects\question1.d)
 I (Hardware\Question1.h)(0x69C7C15A)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
 I (.\Start\core_cm3.h)(0x4D523B58)
@@ -842,14 +873,15 @@ I (.\Library\stm32f10x_tim.h)(0x4D783BB4)
 I (.\Library\stm32f10x_usart.h)(0x4D783BB4)
 I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
-I (Hardware\K230_UART.h)(0x69C7A8B5)
+I (Hardware\K230_UART.h)(0x69C7EF3E)
 I (Hardware\Servo.h)(0x69C79C23)
-I (.\User\GimbalPID.h)(0x69C7A8C4)
+I (.\User\GimbalPID.h)(0x69C80CDC)
 I (Hardware\TFT_SPI.h)(0x69C79C39)
 I (.\System\Delay.h)(0x69C79C62)
+I (Hardware\Laser.h)(0x69C8CDB6)
 I (D:\Keil\Core\ARM\ARMcompiler_506\include\stdio.h)(0x5E8F1DC2)
 F (.\Hardware\question1.h)(0x69C7C15A)()
-F (.\Hardware\K230_UART.c)(0x69C7A8B5)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\k230_uart.o --omf_browse .\objects\k230_uart.crf --depend .\objects\k230_uart.d)
+F (.\Hardware\K230_UART.c)(0x69CA7301)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\k230_uart.o --omf_browse .\objects\k230_uart.crf --depend .\objects\k230_uart.d)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
 I (.\Start\core_cm3.h)(0x4D523B58)
 I (D:\Keil\Core\ARM\ARMcompiler_506\include\stdint.h)(0x5E8F1DC2)
@@ -881,8 +913,9 @@ I (.\Library\misc.h)(0x4D783BB4)
 I (D:\Keil\Core\ARM\ARMcompiler_506\include\string.h)(0x5E8F1DC2)
 I (D:\Keil\Core\ARM\ARMcompiler_506\include\stdlib.h)(0x5E8F1DC2)
 I (D:\Keil\Core\ARM\ARMcompiler_506\include\stdio.h)(0x5E8F1DC2)
-I (Hardware\K230_Uart.h)(0x69C7A8B5)
-F (.\Hardware\K230_UART.h)(0x69C7A8B5)()
+I (Hardware\K230_UART.h)(0x69C7EF3E)
+I (Hardware\Question2.h)(0x69CA72E5)
+F (.\Hardware\K230_UART.h)(0x69C7EF3E)()
 F (.\Hardware\PWM.c)(0x69C79BB5)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\pwm.o --omf_browse .\objects\pwm.crf --depend .\objects\pwm.d)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
 I (.\Start\core_cm3.h)(0x4D523B58)
@@ -979,8 +1012,79 @@ I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
 I (.\System\Delay.h)(0x69C79C62)
 F (.\Hardware\TFT_SPI.h)(0x69C79C39)()
+F (.\Hardware\question2.h)(0x69CA72E5)()
+F (.\Hardware\question2.c)(0x69CA72B9)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\question2.o --omf_browse .\objects\question2.crf --depend .\objects\question2.d)
+I (Hardware\Question2.h)(0x69CA72E5)
+I (.\Start\stm32f10x.h)(0x4D783CB4)
+I (.\Start\core_cm3.h)(0x4D523B58)
+I (D:\Keil\Core\ARM\ARMcompiler_506\include\stdint.h)(0x5E8F1DC2)
+I (.\Start\system_stm32f10x.h)(0x4D783CAA)
+I (.\User\stm32f10x_conf.h)(0x4D99A59E)
+I (.\Library\stm32f10x_adc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_bkp.h)(0x4D783BB4)
+I (.\Library\stm32f10x_can.h)(0x4D783BB4)
+I (.\Library\stm32f10x_cec.h)(0x4D783BB4)
+I (.\Library\stm32f10x_crc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_dac.h)(0x4D783BB4)
+I (.\Library\stm32f10x_dbgmcu.h)(0x4D783BB4)
+I (.\Library\stm32f10x_dma.h)(0x4D783BB4)
+I (.\Library\stm32f10x_exti.h)(0x4D783BB4)
+I (.\Library\stm32f10x_flash.h)(0x4D783BB4)
+I (.\Library\stm32f10x_fsmc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_gpio.h)(0x4D783BB4)
+I (.\Library\stm32f10x_i2c.h)(0x4D783BB4)
+I (.\Library\stm32f10x_iwdg.h)(0x4D783BB4)
+I (.\Library\stm32f10x_pwr.h)(0x4D783BB4)
+I (.\Library\stm32f10x_rcc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_rtc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_sdio.h)(0x4D783BB4)
+I (.\Library\stm32f10x_spi.h)(0x4D783BB4)
+I (.\Library\stm32f10x_tim.h)(0x4D783BB4)
+I (.\Library\stm32f10x_usart.h)(0x4D783BB4)
+I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
+I (.\Library\misc.h)(0x4D783BB4)
+I (Hardware\K230_UART.h)(0x69C7EF3E)
+I (Hardware\Servo.h)(0x69C79C23)
+I (.\User\GimbalPID.h)(0x69C80CDC)
+I (Hardware\TFT_SPI.h)(0x69C79C39)
+I (.\System\Delay.h)(0x69C79C62)
+I (.\System\Tick.h)(0x69C928A5)
+I (D:\Keil\Core\ARM\ARMcompiler_506\include\stdio.h)(0x5E8F1DC2)
+I (D:\Keil\Core\ARM\ARMcompiler_506\include\string.h)(0x5E8F1DC2)
+I (Hardware\Laser.h)(0x69C8CDB6)
+F (.\Hardware\Laser.c)(0x69C8CDCB)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\laser.o --omf_browse .\objects\laser.crf --depend .\objects\laser.d)
+I (Hardware\Laser.h)(0x69C8CDB6)
+I (.\Start\stm32f10x.h)(0x4D783CB4)
+I (.\Start\core_cm3.h)(0x4D523B58)
+I (D:\Keil\Core\ARM\ARMcompiler_506\include\stdint.h)(0x5E8F1DC2)
+I (.\Start\system_stm32f10x.h)(0x4D783CAA)
+I (.\User\stm32f10x_conf.h)(0x4D99A59E)
+I (.\Library\stm32f10x_adc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_bkp.h)(0x4D783BB4)
+I (.\Library\stm32f10x_can.h)(0x4D783BB4)
+I (.\Library\stm32f10x_cec.h)(0x4D783BB4)
+I (.\Library\stm32f10x_crc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_dac.h)(0x4D783BB4)
+I (.\Library\stm32f10x_dbgmcu.h)(0x4D783BB4)
+I (.\Library\stm32f10x_dma.h)(0x4D783BB4)
+I (.\Library\stm32f10x_exti.h)(0x4D783BB4)
+I (.\Library\stm32f10x_flash.h)(0x4D783BB4)
+I (.\Library\stm32f10x_fsmc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_gpio.h)(0x4D783BB4)
+I (.\Library\stm32f10x_i2c.h)(0x4D783BB4)
+I (.\Library\stm32f10x_iwdg.h)(0x4D783BB4)
+I (.\Library\stm32f10x_pwr.h)(0x4D783BB4)
+I (.\Library\stm32f10x_rcc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_rtc.h)(0x4D783BB4)
+I (.\Library\stm32f10x_sdio.h)(0x4D783BB4)
+I (.\Library\stm32f10x_spi.h)(0x4D783BB4)
+I (.\Library\stm32f10x_tim.h)(0x4D783BB4)
+I (.\Library\stm32f10x_usart.h)(0x4D783BB4)
+I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
+I (.\Library\misc.h)(0x4D783BB4)
+F (.\Hardware\Laser.h)(0x69C8CDB6)()
 F (.\User\stm32f10x_conf.h)(0x4D99A59E)()
-F (.\User\stm32f10x_it.c)(0x4D99A59E)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\stm32f10x_it.o --omf_browse .\objects\stm32f10x_it.crf --depend .\objects\stm32f10x_it.d)
+F (.\User\stm32f10x_it.c)(0x69C92C7E)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\stm32f10x_it.o --omf_browse .\objects\stm32f10x_it.crf --depend .\objects\stm32f10x_it.d)
 I (User\stm32f10x_it.h)(0x4D99A59E)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
 I (.\Start\core_cm3.h)(0x4D523B58)
@@ -1011,7 +1115,7 @@ I (.\Library\stm32f10x_usart.h)(0x4D783BB4)
 I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
 F (.\User\stm32f10x_it.h)(0x4D99A59E)()
-F (.\User\menumain.c)(0x69C7C478)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\menumain.o --omf_browse .\objects\menumain.crf --depend .\objects\menumain.d)
+F (.\User\menumain.c)(0x69C9381F)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\menumain.o --omf_browse .\objects\menumain.crf --depend .\objects\menumain.d)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
 I (.\Start\core_cm3.h)(0x4D523B58)
 I (D:\Keil\Core\ARM\ARMcompiler_506\include\stdint.h)(0x5E8F1DC2)
@@ -1041,11 +1145,13 @@ I (.\Library\stm32f10x_usart.h)(0x4D783BB4)
 I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
 I (.\System\Delay.h)(0x69C79C62)
+I (.\System\Tick.h)(0x69C928A5)
 I (.\Hardware\Key.h)(0x69C79C2B)
 I (.\Hardware\TFT_SPI.h)(0x69C79C39)
 I (.\Hardware\Question1.h)(0x69C7C15A)
-F (.\User\GimbalPID.c)(0x69C7BBF7)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\gimbalpid.o --omf_browse .\objects\gimbalpid.crf --depend .\objects\gimbalpid.d)
-I (User\GimbalPID.h)(0x69C7A8C4)
+I (.\Hardware\Question2.h)(0x69CA72E5)
+F (.\User\GimbalPID.c)(0x69C91296)(--c99 -c --cpu Cortex-M3 -g -O1 --apcs=interwork --split_sections -I .\Start -I .\Library -I .\User -I .\System -I .\Hardware-ID:\Keil\Back\Keil\STM32F1xx_DFP\2.4.1\Device\Include-D__UVISION_VERSION="537" -DSTM32F10X_MD -DUSE_STDPERIPH_DRIVER-o .\objects\gimbalpid.o --omf_browse .\objects\gimbalpid.crf --depend .\objects\gimbalpid.d)
+I (User\GimbalPID.h)(0x69C80CDC)
 I (.\Start\stm32f10x.h)(0x4D783CB4)
 I (.\Start\core_cm3.h)(0x4D523B58)
 I (D:\Keil\Core\ARM\ARMcompiler_506\include\stdint.h)(0x5E8F1DC2)
@@ -1075,4 +1181,4 @@ I (.\Library\stm32f10x_usart.h)(0x4D783BB4)
 I (.\Library\stm32f10x_wwdg.h)(0x4D783BB4)
 I (.\Library\misc.h)(0x4D783BB4)
 I (.\Hardware\Servo.h)(0x69C79C23)
-F (.\User\GimbalPID.h)(0x69C7A8C4)()
+F (.\User\GimbalPID.h)(0x69C80CDC)()

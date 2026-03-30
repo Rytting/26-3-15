@@ -29,6 +29,8 @@
 .\objects\menumain.o: .\Library\stm32f10x_wwdg.h
 .\objects\menumain.o: .\Library\misc.h
 .\objects\menumain.o: .\System\Delay.h
+.\objects\menumain.o: .\System\Tick.h
 .\objects\menumain.o: .\Hardware\Key.h
 .\objects\menumain.o: .\Hardware\TFT_SPI.h
 .\objects\menumain.o: .\Hardware\Question1.h
+.\objects\menumain.o: .\Hardware\Question2.h

@@ -22,20 +22,38 @@ Dialog DLL:      TCM.DLL V1.56.1.0
  
 <h2>Project:</h2>
 D:\STM32Project\menu\Project.uvprojx
-Project File Date:  03/28/2026
+Project File Date:  03/29/2026
 
 <h2>Output:</h2>
 *** Using Compiler 'V5.06 update 7 (build 960)', folder: 'D:\Keil\Core\ARM\ARMcompiler_506\Bin'
 Build target 'Target 1'
+compiling K230_UART.c...
+Hardware\Question2.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif
+Hardware\K230_UART.c: 1 warning, 0 errors
+compiling question2.c...
+Hardware\Question2.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif
+Hardware\Laser.h(16): warning:  #1-D: last line of file ends without a newline
+  #endif
+Hardware\question2.c(633): warning:  #177-D: variable "buf"  was declared but never referenced
+      char buf[24];
+Hardware\question2.c(783): warning:  #1-D: last line of file ends without a newline
+  }
+Hardware\question2.c(607): warning:  #177-D: function "Q2_ShowWords"  was declared but never referenced
+  static void Q2_ShowWords(uint16_t x, uint16_t y, const char *text, uint16_t color)
+Hardware\question2.c: 5 warnings, 0 errors
 compiling menumain.c...
 .\Hardware\Question1.h(17): warning:  #1-D: last line of file ends without a newline
   #endif
-User\menumain.c(159): warning:  #177-D: function "ResetQuestion"  was declared but never referenced
-  static void ResetQuestion(uint8_t qid)
-User\menumain.c: 2 warnings, 0 errors
+.\Hardware\Question2.h(60): warning:  #1-D: last line of file ends without a newline
+  #endif
+User\menumain.c(695): warning:  #1-D: last line of file ends without a newline
+  }
+User\menumain.c: 3 warnings, 0 errors
 linking...
-Program Size: Code=16154 RO-data=1678 RW-data=236 ZI-data=1772  
-".\Objects\Project.axf" - 0 Error(s), 2 Warning(s).
+Program Size: Code=20710 RO-data=1678 RW-data=268 ZI-data=1852  
+".\Objects\Project.axf" - 0 Error(s), 9 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -48,7 +66,7 @@ Package Vendor: Keil
   D:/Keil/Back/Keil/STM32F1xx_DFP/2.4.1/Device/Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:00
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

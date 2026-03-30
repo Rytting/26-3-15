@@ -31,4 +31,8 @@ float GimbalPID_GetYErr(void);
 float GimbalPID_GetXOut(void);
 float GimbalPID_GetYOut(void);
 
+void GimbalPID_SetParams(float kp_x, float ki_x, float kd_x,
+                         float kp_y, float ki_y, float kd_y,
+                         float i_lim_x, float i_lim_y);
+
 #endif

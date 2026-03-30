@@ -34,4 +34,5 @@
 .\objects\question1.o: .\User\GimbalPID.h
 .\objects\question1.o: Hardware\TFT_SPI.h
 .\objects\question1.o: .\System\Delay.h
+.\objects\question1.o: Hardware\Laser.h
 .\objects\question1.o: D:\Keil\Core\ARM\ARMcompiler_506\Bin\..\include\stdio.h

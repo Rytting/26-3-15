@@ -664,6 +664,16 @@
               <FileType>5</FileType>
               <FilePath>.\System\Delay.h</FilePath>
             </File>
+            <File>
+              <FileName>Tick.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\System\Tick.c</FilePath>
+            </File>
+            <File>
+              <FileName>tick.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\System\tick.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -733,6 +743,26 @@
               <FileName>TFT_SPI.h</FileName>
               <FileType>5</FileType>
               <FilePath>.\Hardware\TFT_SPI.h</FilePath>
+            </File>
+            <File>
+              <FileName>question2.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\question2.h</FilePath>
+            </File>
+            <File>
+              <FileName>question2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\question2.c</FilePath>
+            </File>
+            <File>
+              <FileName>Laser.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Hardware\Laser.c</FilePath>
+            </File>
+            <File>
+              <FileName>Laser.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Hardware\Laser.h</FilePath>
             </File>
           </Files>
         </Group>

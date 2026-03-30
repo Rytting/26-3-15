@@ -1,9 +1,13 @@
 #include "stm32f10x.h"
 #include "Delay.h"
+#include "Tick.h"
 #include "Key.h"
 #include "TFT_SPI.h"
 #include "Question1.h"
+#include "Question2.h"
+
 static uint8_t runPageJustEntered = 0;
+
 /*==========================
   1. 枚举定义
 ==========================*/
@@ -48,21 +52,22 @@ static uint8_t listIndex = 0;       // 题目列表索引
 static uint8_t detailSel = 0;       // 详情页底部选择 0/1/2
 static QuestionType currentType = TYPE_BASIC;
 static uint8_t currentQuestion = 0; // 当前选中题号（0~7）
+static uint8_t q2RunSel = 0;        // Q2运行页选项 0/1/2
 
 /*==========================
   3. 题目表
 ==========================*/
 static QuestionItem questions[8] =
 {
-    {"Q1", "RESET TO ORIGIN", "ERR <= 2CM", TYPE_BASIC,    QSTAT_NOT_START},
-    {"Q2", "MOVE SQUARE",     "30S CLOCKWISE", TYPE_BASIC, QSTAT_NOT_START},
-    {"Q3", "A4 TAPE PATH",    "30S CLOCKWISE", TYPE_BASIC, QSTAT_NOT_START},
-    {"Q4", "ROTATED A4",      "30S CLOCKWISE", TYPE_BASIC, QSTAT_NOT_START},
+    {"Q1", "RESET TO ORIGIN", "ERR <= 2CM",      TYPE_BASIC,    QSTAT_NOT_START},
+    {"Q2", "MOVE SQUARE",     "30S CLOCKWISE",   TYPE_BASIC,    QSTAT_NOT_START},
+    {"Q3", "A4 TAPE PATH",    "30S CLOCKWISE",   TYPE_BASIC,    QSTAT_NOT_START},
+    {"Q4", "ROTATED A4",      "30S CLOCKWISE",   TYPE_BASIC,    QSTAT_NOT_START},
 
-    {"Q1", "TRACK IN 2S",     "GREEN -> RED", TYPE_ADVANCED, QSTAT_NOT_START},
-    {"Q2", "TRACK MOVING",    "WITH PAUSE",     TYPE_ADVANCED, QSTAT_NOT_START},
-    {"Q3", "ADV RESERVED",    "TODO",           TYPE_ADVANCED, QSTAT_NOT_START},
-    {"Q4", "ADV RESERVED",    "TODO",           TYPE_ADVANCED, QSTAT_NOT_START}
+    {"Q1", "TRACK IN 2S",     "GREEN -> RED",    TYPE_ADVANCED, QSTAT_NOT_START},
+    {"Q2", "TRACK MOVING",    "WITH PAUSE",      TYPE_ADVANCED, QSTAT_NOT_START},
+    {"Q3", "ADV RESERVED",    "TODO",            TYPE_ADVANCED, QSTAT_NOT_START},
+    {"Q4", "ADV RESERVED",    "TODO",            TYPE_ADVANCED, QSTAT_NOT_START}
 };
 
 static const char *mainMenu[2] =
@@ -105,37 +110,31 @@ static char* GetStatusName(QuestionStatus st)
 
 /*==========================
   5. 题目动作封装
-  注意：把“初始化 / 开始 / 停止 / 重置”彻底分开
 ==========================*/
 static void EnterQuestionRun_FirstStart(uint8_t qid)
 {
     currentQuestion = qid;
     currentMenu = MENU_RUN;
     runPageJustEntered = 1;
+
+    if(qid == 1)
+    {
+        q2RunSel = 0;
+        Question2_SetMenuSelect(q2RunSel);
+    }
 }
-//static void EnterQuestionRun_FirstStart(uint8_t qid)
-//{
-//    currentQuestion = qid;
-//    currentMenu = MENU_RUN;
-
-//    TFT_Clear(WHITE);
-//    TFT_ShowString(10, 20, "ENTER RUN PAGE", RED);
-
-//    if(qid == 0)
-//    {
-//        TFT_ShowString(10, 60, "Q1 START", BLUE);
-//        /* 先不要调 Question1_Init();
-//           先不要调 Question1_SetRunState(Q1_RUNNING); */
-//    }
-//}
 
 static void ResumeQuestionRun(uint8_t qid)
 {
     currentQuestion = qid;
     currentMenu = MENU_RUN;
     runPageJustEntered = 2;
-}
 
+    if(qid == 1)
+    {
+        Question2_SetMenuSelect(q2RunSel);
+    }
+}
 static void RestartQuestionRun(uint8_t qid)
 {
     currentQuestion = qid;
@@ -143,9 +142,16 @@ static void RestartQuestionRun(uint8_t qid)
 
     if(qid == 0)
     {
-        Question1_Reset();                    // 重新开始才重置
+        Question1_Reset();
         Question1_SetRunState(Q1_RUNNING);
     }
+	else if(qid == 1)
+	{
+		q2RunSel = 0;
+		Question2_Reset();
+		Question2_EnterPrepare();
+		Question2_SetMenuSelect(q2RunSel);
+	}
 }
 
 static void StopQuestion(uint8_t qid)
@@ -154,6 +160,10 @@ static void StopQuestion(uint8_t qid)
     {
         Question1_SetRunState(Q1_STOPPED);
     }
+    else if(qid == 1)
+    {
+        Question2_Pause();          // Q2这里按“停止”实际当暂停用
+    }
 }
 
 static void ResetQuestion(uint8_t qid)
@@ -161,6 +171,10 @@ static void ResetQuestion(uint8_t qid)
     if(qid == 0)
     {
         Question1_Reset();
+    }
+    else if(qid == 1)
+    {
+        Question2_Reset();
     }
 }
 
@@ -251,21 +265,21 @@ void Show_DetailBottomBar(void)
 
     if(st == QSTAT_NOT_START)
     {
-        TFT_ShowString(190, 175, detailSel==0 ? ">START"  : " START", YELLOW);
-        TFT_ShowString(190, 195, detailSel==1 ? ">DONE"   : " DONE",  YELLOW);
-        TFT_ShowString(190, 215, detailSel==2 ? ">BACK"   : " BACK",  YELLOW);
+        TFT_ShowString(190, 175, detailSel==0 ? ">START"  : " START",  YELLOW);
+        TFT_ShowString(190, 195, detailSel==1 ? ">DONE"   : " DONE",   YELLOW);
+        TFT_ShowString(190, 215, detailSel==2 ? ">BACK"   : " BACK",   YELLOW);
     }
     else if(st == QSTAT_RUNNING)
     {
-        TFT_ShowString(190, 175, detailSel==0 ? ">STOP"   : " STOP",  YELLOW);
-        TFT_ShowString(190, 195, detailSel==1 ? ">DONE"   : " DONE",  YELLOW);
-        TFT_ShowString(190, 215, detailSel==2 ? ">BACK"   : " BACK",  YELLOW);
+        TFT_ShowString(190, 175, detailSel==0 ? ">STOP"   : " STOP",   YELLOW);
+        TFT_ShowString(190, 195, detailSel==1 ? ">DONE"   : " DONE",   YELLOW);
+        TFT_ShowString(190, 215, detailSel==2 ? ">BACK"   : " BACK",   YELLOW);
     }
     else if(st == QSTAT_PAUSED)
     {
-        TFT_ShowString(190, 175, detailSel==0 ? ">RESUME" : " RESUME",YELLOW);
-        TFT_ShowString(190, 195, detailSel==1 ? ">DONE"   : " DONE",  YELLOW);
-        TFT_ShowString(190, 215, detailSel==2 ? ">BACK"   : " BACK",  YELLOW);
+        TFT_ShowString(190, 175, detailSel==0 ? ">RESUME" : " RESUME", YELLOW);
+        TFT_ShowString(190, 195, detailSel==1 ? ">DONE"   : " DONE",   YELLOW);
+        TFT_ShowString(190, 215, detailSel==2 ? ">BACK"   : " BACK",   YELLOW);
     }
     else if(st == QSTAT_DONE)
     {
@@ -314,6 +328,7 @@ int main(void)
     uint8_t base;
 
     Delay_Init();
+	Tick_Init();
     Key_Init();
     TFT_Init();
 
@@ -325,26 +340,61 @@ int main(void)
 
         /* 运行态下持续执行题目任务 */
         if(currentMenu == MENU_RUN)
-		{
-			if(currentQuestion == 0)
+        {
+            if(currentQuestion == 0)
+            {
+                if(runPageJustEntered == 1)
+                {
+                    Question1_Init();
+                    Question1_SetRunState(Q1_RUNNING);
+                    runPageJustEntered = 0;
+                }
+                else if(runPageJustEntered == 2)
+                {
+                    Question1_ShowRunPage();
+                    Question1_SetRunState(Q1_RUNNING);
+                    runPageJustEntered = 0;
+                }
+
+                Question1_Task();
+                Show_RunHintBar();
+            }
+            else if(currentQuestion == 1)
 			{
 				if(runPageJustEntered == 1)
 				{
-					Question1_Init();
-					Question1_SetRunState(Q1_RUNNING);
+					q2RunSel = 0;
+					Question2_Init();
+					Question2_EnterPrepare();
+					Question2_SetMenuSelect(q2RunSel);
+					Question2_ShowPage();
 					runPageJustEntered = 0;
 				}
 				else if(runPageJustEntered == 2)
 				{
-					Question1_ShowRunPage(); 
-					Question1_SetRunState(Q1_RUNNING);
+					Question2_SetMenuSelect(q2RunSel);
+					Question2_ShowPage();
+
+					if(Question2_GetRunState() == Q2_PAUSED &&
+					   questions[currentQuestion].status == QSTAT_RUNNING)
+					{
+						Question2_Resume();
+					}
+
 					runPageJustEntered = 0;
 				}
 
-				Question1_Task();
-				Show_RunHintBar();
+				Question2_Task();
+
+				/* 自动完成时同步菜单状态，防止按键逻辑走错分支 */
+				if(Question2_GetRunState() == Q2_DONE &&
+				   questions[currentQuestion].status == QSTAT_RUNNING)
+				{
+					questions[currentQuestion].status = QSTAT_DONE;
+				}
 			}
-		}
+        }
+
         if(key == KEY_NONE)
         {
             Delay_ms(10);
@@ -443,7 +493,15 @@ int main(void)
                     else if(*st == QSTAT_PAUSED)
                     {
                         *st = QSTAT_RUNNING;
-                        ResumeQuestionRun(currentQuestion);
+
+                        if(currentQuestion == 0)
+                        {
+                            ResumeQuestionRun(currentQuestion);
+                        }
+                        else if(currentQuestion == 1)
+                        {
+                            ResumeQuestionRun(currentQuestion);
+                        }
                     }
                     else if(*st == QSTAT_DONE)
                     {
@@ -456,11 +514,20 @@ int main(void)
                     if(*st == QSTAT_DONE)
                     {
                         *st = QSTAT_NOT_START;
+                        ResetQuestion(currentQuestion);
                     }
                     else
                     {
                         *st = QSTAT_DONE;
-                        StopQuestion(currentQuestion);
+
+                        if(currentQuestion == 0)
+                        {
+                            StopQuestion(currentQuestion);
+                        }
+                        else if(currentQuestion == 1)
+                        {
+                            Question2_Stop();
+                        }
                     }
                     Show_DetailPage();
                 }
@@ -476,38 +543,152 @@ int main(void)
           运行页
         ==========================*/
         else if(currentMenu == MENU_RUN)
-        {
-            if(key == KEY_UP)
-            {
-                if(questions[currentQuestion].status == QSTAT_RUNNING)
-                {
-                    questions[currentQuestion].status = QSTAT_PAUSED;
-                    StopQuestion(currentQuestion);
-                }
-                else if(questions[currentQuestion].status == QSTAT_PAUSED)
-                {
-                    questions[currentQuestion].status = QSTAT_RUNNING;
-                    ResumeQuestionRun(currentQuestion);
-                }
+		{
+			if(currentQuestion == 0)
+			{
+				if(key == KEY_UP)
+				{
+					if(questions[currentQuestion].status == QSTAT_RUNNING)
+					{
+						questions[currentQuestion].status = QSTAT_PAUSED;
+						StopQuestion(currentQuestion);
+					}
+					else if(questions[currentQuestion].status == QSTAT_PAUSED)
+					{
+						questions[currentQuestion].status = QSTAT_RUNNING;
+						ResumeQuestionRun(currentQuestion);
+					}
 
-                if(currentQuestion == 0)
-                {
-                    Show_RunHintBar();
-                }
-            }
-            else if(key == KEY_DOWN)
-            {
-                currentMenu = MENU_DETAIL;
-                Show_DetailPage();
-            }
-            else if(key == KEY_OK)
-            {
-                questions[currentQuestion].status = QSTAT_DONE;
-                StopQuestion(currentQuestion);
-                currentMenu = MENU_DETAIL;
-                Show_DetailPage();
-            }
-        }
+					Show_RunHintBar();
+				}
+				else if(key == KEY_DOWN)
+				{
+					currentMenu = MENU_DETAIL;
+					Show_DetailPage();
+				}
+				else if(key == KEY_OK)
+				{
+					questions[currentQuestion].status = QSTAT_DONE;
+					StopQuestion(currentQuestion);
+					currentMenu = MENU_DETAIL;
+					Show_DetailPage();
+				}
+			}
+			else if(currentQuestion == 1)
+			{
+				Q2_RunState q2state_nav = Question2_GetRunState();
+
+				if(key == KEY_UP)
+				{
+					if(q2state_nav == Q2_DONE || q2state_nav == Q2_STOPPED)
+					{
+						/* 完成态：任意键都退到详情页，不触发重绘 */
+						questions[currentQuestion].status = QSTAT_DONE;
+						currentMenu = MENU_DETAIL;
+						Show_DetailPage();
+					}
+					else if(q2RunSel > 0)
+					{
+						q2RunSel--;
+						Question2_SetMenuSelect(q2RunSel);
+						Question2_ShowPage();
+					}
+				}
+				else if(key == KEY_DOWN)
+				{
+					if(q2state_nav == Q2_DONE || q2state_nav == Q2_STOPPED)
+					{
+						questions[currentQuestion].status = QSTAT_DONE;
+						currentMenu = MENU_DETAIL;
+						Show_DetailPage();
+					}
+					else if(q2RunSel < Question2_GetMenuSelectMax())
+					{
+						q2RunSel++;
+						Question2_SetMenuSelect(q2RunSel);
+						Question2_ShowPage();
+					}
+				}
+				else if(key == KEY_OK)
+				{
+					Q2_RunState q2state = Question2_GetRunState();
+
+					if(q2state == Q2_PREPARE || q2state == Q2_READY)
+					{
+						if(q2RunSel == 0)   // START
+						{
+							questions[currentQuestion].status = QSTAT_RUNNING;
+							Question2_StartFormal();
+							Question2_ShowPage();
+						}
+						else if(q2RunSel == 1)  // RELOCK
+						{
+							Question2_Relock();
+							q2RunSel = 0;
+							Question2_SetMenuSelect(q2RunSel);
+							Question2_ShowPage();
+						}
+						else if(q2RunSel == 2)  // BACK
+						{
+							questions[currentQuestion].status = QSTAT_PAUSED;
+							currentMenu = MENU_DETAIL;
+							Show_DetailPage();
+						}
+					}
+					else if(q2state == Q2_RUNNING)
+					{
+						if(q2RunSel == 0)   // PAUSE
+						{
+							questions[currentQuestion].status = QSTAT_PAUSED;
+							Question2_Pause();
+							Question2_ShowPage();
+						}
+						else if(q2RunSel == 1)  // DONE
+						{
+							questions[currentQuestion].status = QSTAT_DONE;
+							Question2_Stop();
+							currentMenu = MENU_DETAIL;
+							Show_DetailPage();
+						}
+						else if(q2RunSel == 2)  // BACK
+						{
+							questions[currentQuestion].status = QSTAT_PAUSED;
+							Question2_Pause();
+							currentMenu = MENU_DETAIL;
+							Show_DetailPage();
+						}
+					}
+					else if(q2state == Q2_PAUSED)
+					{
+						if(q2RunSel == 0)   // RESUME
+						{
+							questions[currentQuestion].status = QSTAT_RUNNING;
+							Question2_Resume();
+							Question2_ShowPage();
+						}
+						else if(q2RunSel == 1)  // DONE
+						{
+							questions[currentQuestion].status = QSTAT_DONE;
+							Question2_Stop();
+							currentMenu = MENU_DETAIL;
+							Show_DetailPage();
+						}
+						else if(q2RunSel == 2)  // BACK
+						{
+							currentMenu = MENU_DETAIL;
+							Show_DetailPage();
+						}
+					}
+					else if(q2state == Q2_DONE || q2state == Q2_STOPPED)
+					{
+						/* 确保状态同步（自动完成时menumain可能还停在RUNNING） */
+						questions[currentQuestion].status = QSTAT_DONE;
+						currentMenu = MENU_DETAIL;
+						Show_DetailPage();
+					}
+				}
+			}
+		}
 
         Delay_ms(120);
     }

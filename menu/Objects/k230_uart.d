@@ -31,4 +31,5 @@
 .\objects\k230_uart.o: D:\Keil\Core\ARM\ARMcompiler_506\Bin\..\include\string.h
 .\objects\k230_uart.o: D:\Keil\Core\ARM\ARMcompiler_506\Bin\..\include\stdlib.h
 .\objects\k230_uart.o: D:\Keil\Core\ARM\ARMcompiler_506\Bin\..\include\stdio.h
-.\objects\k230_uart.o: Hardware\K230_Uart.h
+.\objects\k230_uart.o: Hardware\K230_UART.h
+.\objects\k230_uart.o: Hardware\Question2.h

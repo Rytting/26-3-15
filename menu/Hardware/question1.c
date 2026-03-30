@@ -4,6 +4,7 @@
 #include "GimbalPID.h"
 #include "TFT_SPI.h"
 #include "Delay.h"
+#include "Laser.h"
 #include <stdio.h>
 
 static Q1_RunState g_q1_state = Q1_STOPPED;
@@ -30,6 +31,7 @@ void Question1_Init(void)
         K230_Uart_Init();
         Servo_Init();
         GimbalPID_Init();
+		Laser_Init();
         g_q1_hw_inited = 1;
     }
 
@@ -63,19 +65,21 @@ void Question1_SetRunState(Q1_RunState state)
 
     if(state == Q1_RUNNING)
     {
-        /* 开始前清掉旧帧 */
         K230_Uart_ClearFrameFlag();
 
-        /* 再发一次模式，防止K230不在Q1 */
         K230_SetMode(1);
         Delay_ms(20);
         K230_Run(1);
+
+        RedLaser_On();     
 
         Q1_ShowState(Q1_RUNNING);
     }
     else
     {
         K230_Stop();
+        RedLaser_Off();  
+
         Q1_ShowState(Q1_STOPPED);
     }
 }
@@ -84,19 +88,22 @@ void Question1_Reset(void)
 {
     g_q1_state = Q1_STOPPED;
 
-    /* 1. 停止视觉 */
+    /* 停止视觉 */
     K230_Stop();
     Delay_ms(20);
-
-    /* 2. 本地回中 */
+	
+	/* 关激光 */
+	RedLaser_Off();
+	
+    /* 本地回中 */
     GimbalPID_Reset();
 
-    /* 3. 视觉复位 */
+    /* 视觉复位 */
     K230_SetMode(1);
     Delay_ms(20);
     K230_ResetVision();
 
-    /* 4. 清状态 */
+    /* 清状态 */
     g_last_dx = 0;
     g_last_dy = 0;
     g_has_data = 0;

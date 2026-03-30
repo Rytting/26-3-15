@@ -4,11 +4,11 @@
 /* =========================
    1) 舵机角度范围
    ========================= */
-#define X_ANGLE_MIN     75.0f
+#define X_ANGLE_MIN     65.0f
 #define X_ANGLE_MID     90.0f
-#define X_ANGLE_MAX     105.0f
+#define X_ANGLE_MAX     110.0f
 
-#define Y_ANGLE_MIN     152.0f
+#define Y_ANGLE_MIN     150.0f
 #define Y_ANGLE_MID     164.0f
 #define Y_ANGLE_MAX     176.0f
 
@@ -21,7 +21,7 @@
 /* =========================
    3) 单次输出限幅
    ========================= */
-#define X_PID_OUT_LIMIT 1.2f
+#define X_PID_OUT_LIMIT 1.6f
 #define Y_PID_OUT_LIMIT 1.2f
 
 /* =========================
@@ -203,4 +203,19 @@ float GimbalPID_GetXOut(void)
 float GimbalPID_GetYOut(void)
 {
     return g_y_out_dbg;
+}
+
+void GimbalPID_SetParams(float kp_x, float ki_x, float kd_x,
+                         float kp_y, float ki_y, float kd_y,
+                         float i_lim_x, float i_lim_y)
+{
+    pid_x.kp = kp_x;
+    pid_x.ki = ki_x;
+    pid_x.kd = kd_x;
+    pid_x.integral_limit = i_lim_x;
+
+    pid_y.kp = kp_y;
+    pid_y.ki = ki_y;
+    pid_y.kd = kd_y;
+    pid_y.integral_limit = i_lim_y;
 }
