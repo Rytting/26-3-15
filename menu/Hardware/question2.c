@@ -116,6 +116,13 @@ static void Q2_UpdateDXDY(void);     /* 仅更新右侧DX/DY数字，值变时调用  */
 static void Q2_UpdateTimer(void);    /* 仅更新计时，每 0.1s 刷一次       */
 static uint32_t Q2_GetElapsedMs(void); /* 取当前或冻结用时               */
 
+/* UART 回调前向声明，供 EnterPrepare 注册使用 */
+static void Q2_OnDiff(int16_t dx, int16_t dy);
+static void Q2_OnViewData(int16_t xl, int16_t xr, int16_t yt, int16_t yb,
+                           int16_t tx, int16_t ty,
+                           int16_t bx, int16_t by, uint8_t flags);
+static void Q2_AutoDoneFromISR(void);
+
 /* =========================
    8) 对外接口
    ========================= */
@@ -142,7 +149,6 @@ void Question2_Reset(void)
     g_has_diff = 0;
 
     Q2_ClearViewData();
-    K230_Uart_ClearFrameFlag();
 
     K230_Stop();
     Delay_ms(20);
@@ -164,14 +170,15 @@ void Question2_EnterPrepare(void)
 {
     g_q2_state = Q2_PREPARE;
     g_has_diff = 0;
-    K230_Uart_ClearFrameFlag();
+
+    /* 注册本题的 UART 回调，覆盖其他题目之前注册的 */
+    K230_RegisterCallbacks(Q2_OnDiff, Q2_OnViewData, Q2_AutoDoneFromISR);
 
     GimbalPID_Reset();
-	// Q2专用参数，调好后固定在这里
     GimbalPID_SetParams(
-        0.05f,  0.001f, 0.08f,   // X轴 kp ki kd（暂时不动）
-        0.03f,  0.001f, 0.08f,   // Y轴 kp ki kd（ki放大）
-        30.0f, 80.0f             // X积分限幅, Y积分限幅
+        0.05f,  0.001f, 0.08f,
+        0.03f,  0.001f, 0.10f,
+        30.0f, 80.0f
     );
     Q2_ClearViewData();
 
@@ -195,7 +202,6 @@ void Question2_StartFormal(void)
         return;
 
     g_q2_state = Q2_RUNNING;
-    K230_Uart_ClearFrameFlag();
 	
 	RedLaser_On();     
     GreenLaser_Off(); 
@@ -259,9 +265,9 @@ void Question2_Done(void)
     Q2_MARK_DIRTY();
 }
 
-/* 仅供 K230 UART 中断调用：只置 pending 标志，
-   不在中断里做任何 TFT / 串口阻塞操作              */
-void Question2_AutoDoneFromISR(void)
+/* 仅供回调：只置 pending 标志，
+   不在中断里做任何 TFT / 串口阻塞操作 */
+static void Q2_AutoDoneFromISR(void)
 {
     if(g_q2_state == Q2_RUNNING)
         g_auto_done_pending = 1;
@@ -297,17 +303,18 @@ uint8_t Question2_GetMenuSelectMax(void)
 {
     return 2;
 }
-void Question2_UpdateDiffData(int16_t dx, int16_t dy)
+/* 三个函数只由 UART 回调调用，不对外暴露 */
+static void Q2_OnDiff(int16_t dx, int16_t dy)
 {
     g_last_dx = dx;
     g_last_dy = dy;
     g_has_diff = 1;
 }
 
-void Question2_UpdateViewData(int16_t xl, int16_t xr, int16_t yt, int16_t yb,
-                              int16_t tx, int16_t ty,
-                              int16_t bx, int16_t by,
-                              uint8_t flags)
+static void Q2_OnViewData(int16_t xl, int16_t xr, int16_t yt, int16_t yb,
+                           int16_t tx, int16_t ty,
+                           int16_t bx, int16_t by,
+                           uint8_t flags)
 {
     uint8_t was_locked = g_view.rect_locked;
 

@@ -6,9 +6,9 @@
 typedef enum
 {
     Q2_STOPPED = 0,
-    Q2_PREPARE,     // 预备：锁框、去起点、可重锁
-    Q2_READY,       // 已就绪，等确认启动
-    Q2_RUNNING,     // 正式30秒
+    Q2_PREPARE,
+    Q2_READY,
+    Q2_RUNNING,
     Q2_PAUSED,
     Q2_DONE
 } Q2_RunState;
@@ -31,30 +31,30 @@ typedef struct
     int16_t by;
 } Q2_ViewData;
 
+/* 生命周期 */
 void Question2_Init(void);
 void Question2_Reset(void);
 void Question2_Task(void);
 void Question2_ShowPage(void);
 
-void Question2_EnterPrepare(void);
+/* 状态控制 */
+void Question2_EnterPrepare(void);   /* 内部会注册 UART 回调 */
 void Question2_StartFormal(void);
 void Question2_Pause(void);
 void Question2_Resume(void);
 void Question2_Stop(void);
-void Question2_Done(void);      /* 正式结束，冻结计时 */
-void Question2_AutoDoneFromISR(void);  /* 仅供UART中断调用：置pending标志 */
+void Question2_Done(void);           /* 正式结束，冻结计时 */
 void Question2_Relock(void);
 
+/* 查询 */
 Q2_RunState Question2_GetRunState(void);
 
-void Question2_UpdateDiffData(int16_t dx, int16_t dy);
-void Question2_UpdateViewData(int16_t xl, int16_t xr, int16_t yt, int16_t yb,
-                              int16_t tx, int16_t ty,
-                              int16_t bx, int16_t by,
-                              uint8_t flags);
-
-/* 新增：菜单高亮控制 */
-void Question2_SetMenuSelect(uint8_t sel);
+/* 菜单高亮 */
+void    Question2_SetMenuSelect(uint8_t sel);
 uint8_t Question2_GetMenuSelectMax(void);
+
+/* 注意：UpdateDiffData / UpdateViewData / AutoDoneFromISR
+   已改为内部 static 函数，外部不可调用，
+   通过 K230_RegisterCallbacks 自动路由 */
 
 #endif
